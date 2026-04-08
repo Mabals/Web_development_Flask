@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart - Disebo's</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1>🛒 Your Cart</h1>
+        <a href="/" class="btn btn-secondary mb-3">Continue Shopping</a>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-success">{{ messages[0] }}</div>
+            {% endif %}
+        {% endwith %}
+
+        {% if cart %}
+        <table class="table">
+            <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+            <tbody>
+                {% for c in cart %}
+                <tr>
+                    <td>{{ c.item.name }}</td>
+                    <td>{{ c.qty }}</td>
+                    <td>R{{ c.item.price }}</td>
+                    <td>R{{ (c.item.price * c.qty)|round(2) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Total: R{{ total }}</h3>
+        <a href="/checkout" class="btn btn-success btn-lg">Checkout & Place Order</a>
+        {% else %}
+        <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
